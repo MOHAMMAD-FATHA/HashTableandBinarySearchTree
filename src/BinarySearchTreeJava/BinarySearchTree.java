@@ -4,31 +4,55 @@ package BinarySearchTreeJava;
  * @author Mohammad Fatha 
  * Purpose to create a method to add elements in Binary Tree
  */
+
 class Node {
 	int data;
 	Node left, right;
 
-	public Node(int data) {
-		this.data = data;
-		this.left = this.right = null;
-
-	}
 }
 
-public class BinarySearchTree {
+class NodeBST {
 
-	Node root;
+	public Node insert(Node node,int data) {
+        if (node == null ){
+            return createNode(data);
+        }
+        if ( data < node.data){
+            node.left = insert(node.left,data);
 
-	BinarySearchTree(int key) {
-		root = new Node(key);
-	}
+        }else if (data > node.data){
+            node.right = insert(node.right,data);
+        }
+        return node;
+    }
 
-	BinarySearchTree() {
-		root = null;
-	}
-
+	private Node createNode(int data) {
+        Node root = new Node();
+        root.data = data;
+        root.left = null;
+        root.right = null;
+        return root;
+    }
+	public boolean searchNode(Node node,int data){
+        if (node == null) return false;
+        boolean isPresent = false;
+        while (node != null){
+            if (data < node.data){
+                node = node.left;
+            }
+            else if(data > node.data){
+                node=node.right;
+            }
+            else {
+                isPresent = true;
+                break;
+            }
+        }
+        return  isPresent;
+    }
+	
 	public void inorderTraversal(Node node) {
-		if (root == null)
+		if (node == null)
 			System.out.println("Tree is empty");
 		else {
 			if (node.left != null)
@@ -38,34 +62,35 @@ public class BinarySearchTree {
 				inorderTraversal(node.right);
 		}
 	}
+	
+}
 
+
+	
+public class BinarySearchTree {
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		BinarySearchTree tree = new BinarySearchTree();
+		NodeBST tree = new NodeBST();
+		Node node = new Node();
+		tree.insert(node, 56);
+		tree.insert(node,30);
+		tree.insert(node,70);
+		tree.insert(node,22);
+		tree.insert(node,40);
+		tree.insert(node,11);
+		tree.insert(node,3);
+		tree.insert(node,16);
+		tree.insert(node,60);
+		tree.insert(node,95);
+		tree.insert(node,65);
+		tree.insert(node,63);
+		tree.insert(node,67);
 
-		tree.root = new Node(56);
-		tree.root.left = new Node(30);
-		tree.root.right = new Node(70);
-
-		//Adding elements in left and right of 30 and further
-		tree.root.left.left = new Node(22);
-		tree.root.left.right= new Node(40);
-		tree.root.left.left.left = new Node(11);
-		tree.root.left.left.left.left = new Node(3);
-		tree.root.left.left.left.right = new Node(3);
-		
-		//Adding elements in left and right of 70 and further
-		tree.root.right.left = new Node(60);
-		tree.root.right.right = new Node(95);
-		tree.root.right.left = new Node(65);
-		tree.root.right.left = new Node(63);
-		tree.root.right.left = new Node(67);
-		
-		
-		
-		tree.inorderTraversal(tree.root);
-
+		System.out.println(" Element present in the tree :: "+ tree.searchNode(node,63));
+		System.out.println();
+		System.out.println("Level order traversal of binary tree is ");
+		tree.inorderTraversal(node);
 	}
-
 }
